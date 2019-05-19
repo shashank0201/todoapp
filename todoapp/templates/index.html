@@ -1,0 +1,102 @@
+{% load static %}
+<html>
+   <head>
+      <script src='{% static "js/angular.min.js" %}'></script>
+      <script src='{% static "js/angular-route.min.js" %}'></script>
+      <!-- <script src='{% static "js/jquery.min.js" %}'></script> -->
+      <script src='{% static "js/qppjs/ctrl.js" %}'></script>
+      <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+      <link rel="stylesheet" type="text/css" href="{% static 'css/style.css' %}">
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
+      
+      <link rel="stylesheet" href="{% static 'css/jquery-ui.css' %}">
+      <script src='{% static "js/jquery-1.12.4.js" %}'></script>
+      <script src='{% static "js/jquery-ui.js" %}'></script>
+      
+
+   </head>
+   <body ng-app="mytodoApp">
+      <div ng-controller ="mytodoCtrl">
+         <h1>TodoApp</h1>
+         <p class="tagline">a Django todo app</p>
+         <form class="form-horizontal" >
+            <div class="form-group">
+               <label class="control-label col-sm-2" for="title">Title</label>
+               <div class="col-sm-5">
+                  <input type="text" class="form-control" id="title" ng-model="title" placeholder="Give a name to your work." name="title">
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="control-label col-sm-2" for="desc">Description</label>
+               <div class="col-sm-5">
+                  <input type="text" class="form-control" id="desc" ng-model="descriptions"  placeholder="What do you need to do?" name="desc">
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="control-label col-sm-2" for="date">Due Date</label>
+               <div class="col-sm-5">
+                  <input type="text" class="form-control" id="datepicker" ng-model="completion_date" placeholder="Click here to pick a date to complete your work.">
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="control-label col-sm-2" for="status">status</label>
+               <div class="col-sm-5">
+                  <select ng-model="status" class="form-control" ng-options="x for x in status_list">
+               </div>
+            </div>
+            <div class="form-group">
+               <div class="col-sm-5">
+                  <input type="hidden" ng-model="edit_pk">
+                  <center class='form_button'><button id="save_update" class="btn btn-info" ng-click="save()"> SAVE </button>
+                  <button class="btn btn-warning" ng-click="clear()"> Clear </button></center>
+               </div>
+            </div>
+         </form>
+
+         <div class="container">
+            <h2 align="center">My Todo List</h2>
+            <div class="panel pane-default" ng-show="show_panel">
+               <div class="panel-body nothing">NOTHING TO DO NOW...</div>
+            </div>
+            <table class="table table-striped table-bordered table-responsive" cellspacing="0" ng-show='show_table'>
+               <thead class="thead-dark">
+                  <tr>
+                     <th scope="col">Sr.no</th>
+                     <th scope="col">title</th>
+                     <th scope="col">Descriptions</th>
+                     <th scope="col">created_at</th>
+                     <th scope="col">updated_at</th>
+                     <th scope="col">completion_date</th>
+                     <th scope="col">status</th>
+                     <th class="col-md-1">action</th>
+                  </tr>
+               </thead>
+               <tbody>
+                  <tr ng-repeat="record in todo_record_list">
+                     <td scope="row">[[$index +1]]</td>
+                     <td ng-model="data[[record.pk]].title">[[record.title]] </td>
+                     <td ng-model="data[[record.pk]].descriptions">[[record.Descriptions]]</td>
+                     <td ng-model="data[[record.pk]].created_at">[[record.created_at]]</td>
+                     <td ng-model="data[[record.pk]].updated_at">[[record.updated_at]]</td>
+                     <td ng-model="data[[record.pk]].completion_date">[[record.completion_date]]</td>
+                     <td ng-model="data[[record.pk]].status">[[record.status]]</td>
+                     <td>
+                        <span> <button class="btn btn-primary" ng-click="edit_record([[record.pk]], [[record.title]], [[record.Descriptions]], [[record.completion_date]], [[record.status]] )">edit </button>
+                        <button class="btn btn-danger" ng-click="delete_record(record.pk)">delete </button>
+                        </span>
+                     </td>
+                  </tr>
+               </tbody>
+            </table>
+         </div>
+      </div>
+   </body>
+   <script>
+      $( function() {
+        $( "#datepicker" ).datepicker({dateFormat: "yy-mm-dd"});
+        
+      } );
+   </script>
+</html>
