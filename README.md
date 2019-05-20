@@ -24,7 +24,8 @@ Todoapp is a Django based application
 2. Clone the repo on your local machine and go into the directory:
 
        $ git clone https://github.com/shashank0201/todoapp.git
-       $ cd todo
+       $ cd todoapp
+       $ python manage.py runserver
 
 3. Go to 0.0.0.0:8000 in your browser
 4. Go to 0.0.0.0:8000/admin in your browser.
